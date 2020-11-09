@@ -55,7 +55,14 @@
                 this.tasks.push({
                     action: this.newItemText, done: false
                 });
+                localStorage.setItem("todos", JSON.stringify(this.tasks));
                 this.newItemText = "";
+            }
+        },
+        created() {
+            let data = localStorage.getItem("todos");
+            if (data != null) {
+                this.tasks = JSON.parse(data);
             }
         }
     }
