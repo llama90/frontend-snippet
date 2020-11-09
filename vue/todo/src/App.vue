@@ -21,7 +21,8 @@
             </template>
             <div class="row py-2">
                 <div class="col">
-                    <input v-model="newItemText" class="form-control"/></div>
+                    <input v-model="newItemText" class="form-control"/>
+                </div>
                 <div class="col-2">
                     <button class="btn btn-primary" v-on:click="addNewTodo">Add</button>
                 </div>
@@ -34,9 +35,10 @@
                 </label>
                 </div>
                 <div class="col text-center">
-                    <button class="btn btn-sm btn-warning"
-                            v-on:click="deleteCompleted"> Delete Completed
-                    </button>
+                    <button class="btn btn-sm btn-warning" v-on:click="deleteCompleted"> Delete Completed</button>
+                </div>
+                <div class="col text-center">
+                    <button class="btn btn-sm btn-danger" v-on:click="initializeTask">initializeTask</button>
                 </div>
             </div>
         </div>
@@ -62,6 +64,16 @@
             }
         },
         methods: {
+            initializeTask() {
+                localStorage.clear();
+                this.tasks = [
+                    {action: "Study Frontend", done: false},
+                    {action: "Study Backend", done: false},
+                    {action: "Study DevOps", done: false},
+                    {action: "Study Machine Learning", done: true}
+                ];
+                this.storeData();
+            },
             addNewTodo() {
                 this.tasks.push({
                     action: this.newItemText, done: false
