@@ -21,7 +21,7 @@
             </template>
             <div class="row py-2">
                 <div class="col">
-                    <input v-model="newItemText" class="form-control"/>
+                    <input v-model="newItemText" class="form-control" v-on:keyup.enter="enterKeypress"/>
                 </div>
                 <div class="col-2">
                     <button class="btn btn-primary" v-on:click="addNewTodo">Add</button>
@@ -87,6 +87,9 @@
             deleteCompleted() {
                 this.tasks = this.tasks.filter(t => !t.done);
                 this.storeData();
+            },
+            enterKeypress() {
+                this.addNewTodo();
             }
         },
         created() {
