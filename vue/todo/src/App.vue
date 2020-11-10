@@ -19,14 +19,24 @@
                         <input type="checkbox" v-model="t.done" class="form-check-input"/></div>
                 </div>
             </template>
-            <div class="row py-2">
-                <div class="col">
-                    <input v-model="newItemText" class="form-control" v-on:keyup.enter="enterKeypress"/>
-                </div>
-                <div class="col-2">
-                    <button class="btn btn-primary" v-on:click="addNewTodo">Add</button>
-                </div>
-            </div>
+
+            <ValidationObserver tag="div" v-slot="{ handleSubmit }">
+                <form @submit.prevent="handleSubmit">
+                    <div class="row py-2">
+                        <div class="col">
+                            <ValidationProvider :rules="{required: true}" v-slot="{errors, failed}">
+                                <input v-model="newItemText" class="form-control" :class="{ 'is-invalid': failed}"
+                                       v-on:keyup.enter="enterKeypress"/>
+                                <div class="invalid-feedback">{{errors[0]}}</div>
+                            </ValidationProvider>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-primary" v-on:click="addNewTodo">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </ValidationObserver>
+
             <div class="row bg-secondary py-2 mt-2 text-white">
                 <div class="col text-center">
                     <input type="checkbox" v-model="hideCompleted" class="form-check-input"/> <label
@@ -45,8 +55,17 @@
     </div>
 </template>
 <script>
+    import {ValidationProvider, ValidationObserver, extend} from "vee-validate";
+    import {required} from "vee-validate/dist/rules";
+
+    extend("required", {
+        ...required,
+        message: "This field is required"
+    });
+
     export default {
         name: 'app',
+        components: {ValidationProvider, ValidationObserver},
         data() {
             return {
                 name: "Lucas",
@@ -75,11 +94,13 @@
                 this.storeData();
             },
             addNewTodo() {
-                this.tasks.push({
-                    action: this.newItemText, done: false
-                });
-                this.storeData();
-                this.newItemText = "";
+                if (this.newItemText != "") {
+                    this.tasks.push({
+                        action: this.newItemText, done: false
+                    });
+                    this.storeData();
+                    this.newItemText = "";
+                }
             },
             storeData() {
                 localStorage.setItem("todos", JSON.stringify(this.tasks));
