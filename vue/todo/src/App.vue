@@ -11,15 +11,18 @@
             <template v-else>
                 <div class="row m-1">
                     <div class="col-sm font-weight-bold">Task</div>
+                    <div class="col-sm-1 font-weight-bold text-center">Id</div>
                     <div class="col-sm-1 font-weight-bold text-center">Done</div>
                     <div class="col-sm-1"></div>
                 </div>
-                <div class="row m-1" v-for="t in filteredTasks" v-bind:key="t.action">
+                <div class="row m-1" v-for="t in filteredTasks" v-bind:key="t.id">
                     <div class="col">{{t.action}}</div>
                     <div class="col-sm-1 text-center">
                         <input type="checkbox" v-model="t.done" class="form-check-input"/>
                     </div>
-                    <div class="col-sm-1 text-center"><button class="btn-primary">Delete</button></div>
+                    <div class="col-sm-1 text-center">
+                        <button class="btn-primary" v-on:click="deleteTask(t.id)">Delete</button>
+                    </div>
                 </div>
             </template>
 
@@ -72,12 +75,15 @@
         data() {
             return {
                 name: "Lucas",
-                tasks: [{action: "Study Frontend", done: false},
-                    {action: "Study Backend", done: false},
-                    {action: "Study DevOps", done: false},
-                    {action: "Study Machine Learning", done: true}],
+                tasks: [
+                    {id: 1, action: "Study Frontend", done: false},
+                    {id: 2, action: "Study Backend", done: false},
+                    {id: 3, action: "Study DevOps", done: false},
+                    {id: 4, action: "Study Machine Learning", done: true}
+                ],
                 hideCompleted: true,
-                newItemText: ""
+                newItemText: "",
+                currentId: 0
             }
         },
         computed: {
@@ -89,17 +95,20 @@
             initializeTask() {
                 localStorage.clear();
                 this.tasks = [
-                    {action: "Study Frontend", done: false},
-                    {action: "Study Backend", done: false},
-                    {action: "Study DevOps", done: false},
-                    {action: "Study Machine Learning", done: true}
+                    {id: 1, action: "Study Frontend", done: false},
+                    {id: 2, action: "Study Backend", done: false},
+                    {id: 3, action: "Study DevOps", done: false},
+                    {id: 4, action: "Study Machine Learning", done: true}
                 ];
                 this.storeData();
+                this.currentId = 4;
             },
             addNewTodo() {
-                if (this.newItemText != "") {
+                if (this.newItemText !== "") {
+                    this.currentId += 1;
+                    console.log("index: " + this.currentId);
                     this.tasks.push({
-                        action: this.newItemText, done: false
+                        id: this.currentId, action: this.newItemText, done: false
                     });
                     this.storeData();
                     this.newItemText = "";
@@ -107,6 +116,11 @@
             },
             storeData() {
                 localStorage.setItem("todos", JSON.stringify(this.tasks));
+            },
+            deleteTask(id) {
+                console.log("delete button clicked index: " + id);
+                this.tasks = this.tasks.filter(t => t.id !== id);
+                this.storeData();
             },
             deleteCompleted() {
                 this.tasks = this.tasks.filter(t => !t.done);
