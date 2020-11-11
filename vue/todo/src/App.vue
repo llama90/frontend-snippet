@@ -9,28 +9,31 @@
                     <b>Nothing to do. Hurrah!</b></div>
             </div>
             <template v-else>
-                <div class="row">
-                    <div class="col font-weight-bold">Task</div>
-                    <div class="col-2 font-weight-bold">Done</div>
+                <div class="row m-1">
+                    <div class="col-sm font-weight-bold">Task</div>
+                    <div class="col-sm-1 font-weight-bold text-center">Done</div>
+                    <div class="col-sm-1"></div>
                 </div>
-                <div class="row" v-for="t in filteredTasks" v-bind:key="t.action">
+                <div class="row m-1" v-for="t in filteredTasks" v-bind:key="t.action">
                     <div class="col">{{t.action}}</div>
-                    <div class="col-2 text-center">
-                        <input type="checkbox" v-model="t.done" class="form-check-input"/></div>
+                    <div class="col-sm-1 text-center">
+                        <input type="checkbox" v-model="t.done" class="form-check-input"/>
+                    </div>
+                    <div class="col-sm-1 text-center"><button class="btn-primary">Delete</button></div>
                 </div>
             </template>
 
             <ValidationObserver tag="div" v-slot="{ handleSubmit }">
                 <form @submit.prevent="handleSubmit">
                     <div class="row py-2">
-                        <div class="col">
+                        <div class="col-sm">
                             <ValidationProvider :rules="{required: true}" v-slot="{errors, failed}">
                                 <input v-model="newItemText" class="form-control" :class="{ 'is-invalid': failed}"
                                        v-on:keyup.enter="enterKeypress"/>
                                 <div class="invalid-feedback">{{errors[0]}}</div>
                             </ValidationProvider>
                         </div>
-                        <div class="col-2">
+                        <div class="col-sm-1 text-center">
                             <button class="btn btn-primary" v-on:click="addNewTodo">Add</button>
                         </div>
                     </div>
@@ -44,10 +47,10 @@
                     Hide completed tasks
                 </label>
                 </div>
-                <div class="col text-center">
+                <div class="col-sm-2 text-right">
                     <button class="btn btn-sm btn-warning" v-on:click="deleteCompleted"> Delete Completed</button>
                 </div>
-                <div class="col text-center">
+                <div class="col-sm-1 text-right">
                     <button class="btn btn-sm btn-danger" v-on:click="initializeTask">initializeTask</button>
                 </div>
             </div>
