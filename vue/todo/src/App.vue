@@ -16,7 +16,7 @@
                     <div class="col-sm-1"></div>
                 </div>
                 <div class="row m-1" v-for="t in filteredTasks" v-bind:key="t.id">
-                    <div class="col">{{t.action}}</div>
+                    <p class="col" contenteditable="true" @focusout="modifyTask($event, t.id)">{{t.action}}</p>
                     <div class="col-sm-1 text-center">
                         <input type="checkbox" v-model="t.done" class="form-check-input"/>
                     </div>
@@ -116,6 +116,23 @@
             },
             storeData() {
                 localStorage.setItem("todos", JSON.stringify(this.tasks));
+            },
+            modifyTask(e, id) {
+                console.log("modified task id: " + id);
+                console.log("\tmodified task: " + e.target.innerText);
+                let newTasks = [];
+                for (let [index, task] of this.tasks.entries()) {
+                    console.log("[" + index + "]: " + task);
+                    if (task.id === id) {
+                        task.action = e.target.innerText;
+                        newTasks.push(task);
+                    } else {
+                        newTasks.push(task);
+                    }
+                }
+                console.log(newTasks);
+                this.tasks = newTasks;
+                this.storeData();
             },
             deleteTask(id) {
                 console.log("delete button clicked index: " + id);
