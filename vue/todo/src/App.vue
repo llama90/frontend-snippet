@@ -32,12 +32,12 @@
                         <div class="col-sm">
                             <ValidationProvider :rules="{required: true}" v-slot="{errors, failed}">
                                 <input v-model="newItemText" class="form-control" :class="{ 'is-invalid': failed}"
-                                       v-on:keyup.enter="enterKeypress"/>
+                                       v-on:keyup.enter="addTask"/>
                                 <div class="invalid-feedback">{{errors[0]}}</div>
                             </ValidationProvider>
                         </div>
                         <div class="col-sm-1 text-center">
-                            <button class="btn btn-primary" v-on:click="addNewTodo">Add</button>
+                            <button class="btn btn-primary" v-on:click="addTask">Add</button>
                         </div>
                     </div>
                 </form>
@@ -103,10 +103,9 @@
                 this.storeData();
                 this.currentId = 4;
             },
-            addNewTodo() {
+            addTask() {
                 if (this.newItemText !== "") {
                     this.currentId += 1;
-                    console.log("index: " + this.currentId);
                     this.tasks.push({
                         id: this.currentId, action: this.newItemText, done: false
                     });
@@ -135,16 +134,13 @@
                 this.storeData();
             },
             deleteTask(id) {
-                console.log("delete button clicked index: " + id);
+                console.log("deleted task id: " + id);
                 this.tasks = this.tasks.filter(t => t.id !== id);
                 this.storeData();
             },
             deleteCompleted() {
                 this.tasks = this.tasks.filter(t => !t.done);
                 this.storeData();
-            },
-            enterKeypress() {
-                this.addNewTodo();
             }
         },
         created() {
