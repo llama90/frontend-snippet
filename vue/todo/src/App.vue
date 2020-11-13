@@ -82,8 +82,7 @@
                     {id: 4, action: "Study Machine Learning", done: true}
                 ],
                 hideCompleted: true,
-                newItemText: "",
-                currentId: 0
+                newItemText: ""
             }
         },
         computed: {
@@ -95,19 +94,20 @@
             initializeTask() {
                 localStorage.clear();
                 this.tasks = [
-                    {id: 1, action: "Study Frontend", done: false},
-                    {id: 2, action: "Study Backend", done: false},
-                    {id: 3, action: "Study DevOps", done: false},
-                    {id: 4, action: "Study Machine Learning", done: true}
+                    {id: this.createId(), action: "Study Frontend", done: false},
+                    {id: this.createId(), action: "Study Backend", done: false},
+                    {id: this.createId(), action: "Study DevOps", done: false},
+                    {id: this.createId(), action: "Study Machine Learning", done: true}
                 ];
                 this.storeData();
-                this.currentId = 4;
+            },
+            createId() {
+                return new Date().getTime() + Math.random();
             },
             addTask() {
                 if (this.newItemText !== "") {
-                    this.currentId += 1;
                     this.tasks.push({
-                        id: this.currentId, action: this.newItemText, done: false
+                        id: this.createId(), action: this.newItemText, done: false
                     });
                     this.storeData();
                     this.newItemText = "";
