@@ -11,7 +11,7 @@
             <template v-else>
                 <div class="row m-1">
                     <div class="col-sm font-weight-bold">Task</div>
-                    <div class="col-sm-1 font-weight-bold text-center">Id</div>
+                    <div class="col-sm-1 font-weight-bold text-center"></div>
                     <div class="col-sm-1 font-weight-bold text-center">Done</div>
                     <div class="col-sm-1"></div>
                 </div>
