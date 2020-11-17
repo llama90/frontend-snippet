@@ -6,6 +6,9 @@ Vue.config.productionTip = false
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css"
 
+import store from "./store";
+
 new Vue({
+  store,
   render: h => h(App),
 }).$mount('#app')
