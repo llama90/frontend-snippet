@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import Vuelidate from "vuelidate";
 
 Vue.config.productionTip = false
 
@@ -11,6 +12,8 @@ import router from "./router";
 
 Vue.filter("currency", (value) =>
     new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(value));
+
+Vue.use(Vuelidate);
 
 new Vue({
   store,
