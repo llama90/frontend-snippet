@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import {mapState, mapGetters, mapMutations} from "vuex";
+    import {mapState, mapGetters, mapActions} from "vuex";
 
     export default {
         computed: {
@@ -49,7 +49,8 @@
             }
         },
         methods: {
-            ...mapMutations(["setCurrentPage", "setPageSize"]), changePageSize($event) {
+            ...mapActions(["setCurrentPage", "setPageSize"])
+            , changePageSize($event) {
                 this.setPageSize($event.target.value);
             }
         }
