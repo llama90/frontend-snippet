@@ -30,7 +30,9 @@
         components: {ValidationError},
         data: function () {
             return {
-                username: "admin", password: "secret", showFailureMessage: false,
+                username: null,
+                password: null,
+                showFailureMessage: false,
             }
         },
         computed: {
