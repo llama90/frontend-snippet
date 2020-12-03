@@ -8,6 +8,7 @@ const graphqlHTTP = require("express-graphql").graphqlHTTP;
 const queryResolvers = require("./serverQueriesResolver");
 const mutationResolvers = require("./serverMutationsResolver");
 const auth = require("./authMiddleware");
+const history = require("connect-history-api-fallback");
 
 const fileName = process.argv[2] || "./data.js"
 const port = process.argv[3] || 3500;
@@ -31,6 +32,8 @@ const createServer = () => {
   }, 100)
 }
 
+app.use(history());
+app.use("/", express.static("./build"));
 createServer();
 
 app.use(cors());
