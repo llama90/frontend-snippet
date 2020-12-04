@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import AppReactAPI from './AppReactAPI';
 import AppJavascript from './AppJavascript';
+import AppLint from './AppLint';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -12,6 +13,7 @@ ReactDOM.render(
     <App/>
     <AppReactAPI/>
     <AppJavascript/>
+    <AppLint/>
   </React.StrictMode>,
   document.getElementById('root')
 );
