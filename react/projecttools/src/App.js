@@ -1,8 +1,20 @@
 import React, {Component} from "react";
+import {Display} from "./Display";
 
-export default class extends Component {
-  render = () =>
-    <h4 className="bg-primary text-white text-center p-3">
-      This is an HTML element
-    </h4>
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      city: "London"
+    }
+  }
+
+  changeCity = () => {
+    this.setState({city: this.state.city === "London" ? "New York" : "London"})
+  }
+
+  render() {
+    return (
+      <Display value={this.state.city} callback={this.changeCity}/>);
+  }
 }
