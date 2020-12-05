@@ -19,9 +19,9 @@ function App() {
     <div>
       <h1 className="bg-primary text-white text-center p-2"> Rendering Other Component
       </h1>
-      <Message/>
-      <Message/>
-      <Message/>
+      <Message greeting="Hello" name="Bob"/>
+      <Message greeting="Hola" name={"Alice" + "Smith"}/>
+      <Message greeting="Hi there" name="Dora"/>
       <Summary/>
     </div>
   </React.StrictMode>
