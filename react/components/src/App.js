@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 
 import SimpleComponent from "./component/SimpleComponent";
 import RenderHTML from "./component/RenderHTML";
@@ -22,6 +23,17 @@ import {TableCellWrappingElement} from "./component/TableCellWrappingElement";
 import {TableCellNoContents} from "./component/TableCellNoContents";
 
 let names = ["Bob", "Alice", "Dora"]
+
+function reverseNames() {
+  names.reverse();
+  ReactDOM.render(<App/>, document.getElementById('root'));
+}
+
+function promoteName(name) {
+  names = [name, ...names.filter(val => val !== name)];
+  ReactDOM.render(<App/>, document.getElementById('root'));
+}
+
 
 function App() {
   return <React.StrictMode>
@@ -92,7 +104,16 @@ function App() {
         </thead>
         <tbody>
         {
-          names.map((name, index) => <tr key={name}><TableCell index={index} name={name}/></tr>)
+          names.map(
+            (name, index) =>
+              <tr key={name}>
+                <TableCell
+                  index={index}
+                  name={name}
+                  reverseCallback={reverseNames}
+                  promoteCallback={promoteName}/>
+              </tr>
+          )
         }
         </tbody>
       </table>
