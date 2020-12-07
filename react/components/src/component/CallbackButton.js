@@ -10,3 +10,7 @@ export function CallbackButton(props) {
       className={`btn btn-${props.theme} btn-sm m-1`}/>
   )
 }
+
+CallbackButton.defaultProps = {
+  text: "Default Text", theme: "warning"
+}
