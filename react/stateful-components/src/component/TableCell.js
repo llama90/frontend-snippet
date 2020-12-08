@@ -1,6 +1,7 @@
 import React from "react";
 //import { CallbackButton } from "./CallbackButton";
 import {SimpleButton} from "./SimpleButton";
+import {HooksButton} from "./HooksButton";
 
 export function TableCell(props) {
   return (
@@ -16,6 +17,9 @@ export function TableCell(props) {
           className="btn btn-info btn-sm m-1"
           callback={() => props.promoteCallback(props.name)} text={`Promote (${props.name})`}
         />
+        <HooksButton
+          className="btn btn-info btn-sm m-1"
+          callback={() => props.promoteCallback(props.name)} text={`Promote (${props.name})`}/>
       </td>
     </React.Fragment>
   )
