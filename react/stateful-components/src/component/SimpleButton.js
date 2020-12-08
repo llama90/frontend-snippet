@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 
 export class SimpleButton extends Component {
 
@@ -87,4 +88,27 @@ export class SimpleButton extends Component {
   //   this.setState({hasButtonBeenClicked: true});
   //   this.props.callback();
   // }
+
+  // static defaultProps = {
+  //   disabled: false
+  // }
+  //
+  // static propTypes = {
+  //   text: PropTypes.string,
+  //   theme: PropTypes.string,
+  //   callback: PropTypes.func,
+  //   disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+  // }
+
+}
+
+SimpleButton.defaultProps = {
+  disabled: false
+}
+
+SimpleButton.propTypes = {
+  text: PropTypes.string,
+  theme: PropTypes.string,
+  callback: PropTypes.func,
+  disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 }
