@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Message} from "./component/Message";
 import {List} from "./component/List";
+import {ExternalCounter} from './component/ExternalCounter';
 
 export default class App extends Component {
   constructor(props) {
@@ -18,11 +19,14 @@ export default class App extends Component {
     console.log("Render App Component");
     return <div className="container text-center">
       <div className="row p-2">
-        <div className="col-6">
+        <div className="col-4">
           <Message message={`Counter: ${this.state.counter}`} callback={this.incrementCounter} text="Increment Counter"/>
         </div>
-        <div className="col-6">
+        <div className="col-4">
           <List/>
+        </div>
+        <div className="col-4">
+          <ExternalCounter/>
         </div>
       </div>
     </div>
