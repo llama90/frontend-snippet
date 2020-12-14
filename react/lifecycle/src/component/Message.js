@@ -40,4 +40,15 @@ export class Message extends Component {
   componentWillUnmount() {
     console.log("componentWillUnmount Message Component");
   }
+
+  shouldComponentUpdate(newProps, newState) {
+    let change = newProps.message !== this.props.message;
+    if (change) {
+      console.log(`shouldComponentUpdate ${this.props.text}: Update Allowed`)
+    } else {
+      console.log(`shouldComponentUpdate ${this.props.text}: Update Prevented`)
+    }
+    return change;
+  }
+
 }

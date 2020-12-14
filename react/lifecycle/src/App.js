@@ -3,6 +3,7 @@ import {Message} from "./component/Message";
 import {HooksMessage} from "./component/HooksMessage";
 import {List} from "./component/List";
 import {ExternalCounter} from './component/ExternalCounter';
+import {DirectionDisplay} from './component/DirectionDisplay';
 
 export default class App extends Component {
   constructor(props) {
@@ -13,8 +14,16 @@ export default class App extends Component {
     }
   }
 
-  incrementCounter = () => {
-    this.setState({counter: this.state.counter + 1});
+  changeCounter = (val) => {
+    this.setState({counter: this.state.counter + val})
+  }
+
+  incrementCounter = (counter) => {
+    if (counter === "left") {
+      this.setState({counterLeft: this.state.counterLeft + 1});
+    } else {
+      this.setState({counterRight: this.state.counterRight + 1});
+    }
   }
 
   handleChange = () => {
@@ -52,6 +61,32 @@ export default class App extends Component {
           <ExternalCounter/>
         </div>
       </div>
+
+      <div className="row p-2">
+        <div className="col-6">
+          <Message
+            message={`Left: ${this.state.counterLeft}`}
+            callback={() => this.incrementCounter("left")}
+            text="Increment Left Counter"/>
+        </div>
+        <div className="col-6">
+          <Message
+            message={`Right: ${this.state.counterRight}`}
+            callback={() => this.incrementCounter("right")}
+            text="Increment Right Counter"/>d
+        </div>
+      </div>
+
+      <div className="row p-2">
+        <div className="container text-center">
+          <DirectionDisplay value={this.state.counter}/>
+          <div className="text-center">
+            <button className="btn btn-primary m-1" onClick={() => this.changeCounter(-1)}>Decrease</button>
+            <button className="btn btn-primary m-1" onClick={() => this.changeCounter(1)}>Increase</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   }
 }
