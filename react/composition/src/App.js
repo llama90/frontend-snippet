@@ -10,7 +10,7 @@ export default class App extends Component {
       names: ["Zoe", "Bob", "Alice", "Dora", "Joe"],
       cities: ["London", "New York", "Paris", "Milan", "Boston"],
       proContextData: {
-        proMode: false,
+        proMode: true,
         toggleProMode: this.toggleProMode
       },
       superProContextData: {
