@@ -50,6 +50,17 @@ export class Editor extends Component {
             </option>)}
         </select>
       </div>
+      <div className="form-group">
+        <label>Ice Cream Flavors</label>
+        {this.flavors.map(flavor =>
+          <div className="form-check" key={flavor}>
+            <input className="form-check-input" type="radio" name="flavor" value={flavor} checked={this.state.flavor === flavor} onChange={this.updateFormValue}/>
+            <label className="form-check-label">
+              {flavor}
+            </label>
+          </div>
+        )}
+      </div>
     </div>
   }
 }
