@@ -1,0 +1,8 @@
+{
+  "products": [
+    { "id": 1, "name": "cpu", "price": 1024, "origin": "USA" }
+  ],
+  "orders": [
+    { "id": 1, "productId": "1", "name": "lucas" }
+  ]
+}
