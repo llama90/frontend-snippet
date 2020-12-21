@@ -10,7 +10,8 @@ export class Editor extends Component {
       selectElementToppings: ["Strawberries"],
       radioButtonFlavor: "Vanilla",
       twoScoops: false,
-      checkBoxToppings: ["Strawberries"]
+      checkBoxToppings: ["Strawberries"],
+      order: ""
     }
 
     this.selectedElementFlavors = ["Chocolate", "Double Chocolate", "Triple Chocolate", "Vanilla"];
@@ -54,6 +55,12 @@ export class Editor extends Component {
         <label>Name</label>
         <input className="form-control" name="name" value={this.state.name} onChange={this.updateFormValue}/>
       </div>
+
+      <div className="form-group">
+        <label>Order</label>
+        <textarea className="form-control" name="order" value={this.state.order} onChange={this.updateFormValue}/>
+      </div>
+
       <div className="form-group">
         <label>Ice Cream Flavors</label>
         <select className="form-control" name="selectElementFlavor" value={this.state.selectElementFlavor} onChange={this.updateFormValue}>
