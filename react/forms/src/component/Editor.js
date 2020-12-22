@@ -8,19 +8,21 @@ export class Editor extends Component {
     super(props);
     this.state = {
       name: "Bob",
+      email: "",
+      emailConfirm: "",
       selectElementFlavor: "Vanilla",
       selectElementToppings: ["Strawberries"],
       radioButtonFlavor: "Vanilla",
       twoScoops: false,
       checkBoxToppings: ["Strawberries"],
       order: "",
-      email: "",
       terms: false
     }
 
     this.rules = {
       name: {required: true, minlength: 3, alpha: true},
-      email: {required: true, email: true},
+      email: {required: true, email: true, equals: "emailConfirm"},
+      emailConfirm: {required: true, email: true, equals: "email"},
       order: {required: true},
       terms: {true: true}
     }
@@ -78,6 +80,12 @@ export class Editor extends Component {
           <label>Email</label>
           <input className="form-control" name="email" value={this.state.email} onChange={this.updateFormValue}/>
           <ValidationMessage field="email"/>
+        </div>
+
+        <div className="form-group">
+          <label>Confirm Email</label>
+          <input className="form-control" name="emailConfirm" value={this.state.emailConfirm} onChange={this.updateFormValue}/>
+          <ValidationMessage field="emailConfirm"/>
         </div>
 
         <div className="form-group">
