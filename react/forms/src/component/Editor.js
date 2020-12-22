@@ -14,13 +14,15 @@ export class Editor extends Component {
       twoScoops: false,
       checkBoxToppings: ["Strawberries"],
       order: "",
-      email: ""
+      email: "",
+      terms: false
     }
 
     this.rules = {
       name: {required: true, minlength: 3, alpha: true},
       email: {required: true, email: true},
-      order: {required: true}
+      order: {required: true},
+      terms: {true: true}
     }
 
     this.selectedElementFlavors = ["Chocolate", "Double Chocolate", "Triple Chocolate", "Vanilla"];
@@ -59,6 +61,10 @@ export class Editor extends Component {
     }, () => this.props.submit(this.state));
   }
 
+  updateFormValueCheck = (event) => {
+    this.setState({[event.target.name]: event.target.checked});
+  }
+
   render() {
     return <div className="h5 bg-info text-white p-2">
       <FormValidator data={ this.state } rules={ this.rules } submit={ this.props.submit }>
@@ -78,6 +84,16 @@ export class Editor extends Component {
           <label>Order</label>
           <textarea className="form-control" name="order" value={this.state.order} onChange={this.updateFormValue}/>
           <ValidationMessage field="order"/>
+        </div>
+
+        <div className="form-group">
+          <div className="form-check">
+            <input className="form-check-input" type="checkbox" name="terms" checked={this.state.terms} onChange={this.updateFormValueCheck}/>
+            <label className="form-check-label">
+              Agree to terms
+            </label>
+          </div>
+          <ValidationMessage field="terms"/>
         </div>
       </FormValidator>
       <div className="form-group">

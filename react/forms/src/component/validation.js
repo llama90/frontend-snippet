@@ -6,20 +6,26 @@ export function ValidateData(data, rules) {
     if (rules.hasOwnProperty(field)) {
       let fielderrors = [];
       let val = data[field];
-      if (rules[field].required && validator.isEmpty(val)) {
-        fielderrors.push("Value required");
-      }
-      if (!validator.isEmpty(data[field])) {
-        if (rules[field].minlength
-          && !validator.isLength(val, rules[field].minlength)) {
-          fielderrors.push(`Enter at least ${rules[field].minlength}`
-            + " characters");
+      if (rules[field].true) {
+        if (!val) {
+          fielderrors.push("Must be checked");
         }
-        if (rules[field].alpha && !validator.isAlpha(val)) {
-          fielderrors.push("Enter only letters");
+      } else {
+        if (rules[field].required && validator.isEmpty(val)) {
+          fielderrors.push("Value required");
         }
-        if (rules[field].email && !validator.isEmail(val)) {
-          fielderrors.push("Enter a valid email address");
+        if (!validator.isEmpty(data[field])) {
+          if (rules[field].minlength
+            && !validator.isLength(val, rules[field].minlength)) {
+            fielderrors.push(`Enter at least ${rules[field].minlength}`
+              + " characters");
+          }
+          if (rules[field].alpha && !validator.isAlpha(val)) {
+            fielderrors.push("Enter only letters");
+          }
+          if (rules[field].email && !validator.isEmail(val)) {
+            fielderrors.push("Enter a valid email address");
+          }
         }
       }
       if (fielderrors.length > 0) {
