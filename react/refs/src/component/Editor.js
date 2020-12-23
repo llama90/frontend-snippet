@@ -8,6 +8,7 @@ export class Editor extends Component {
       category: "",
       price: ""
     }
+    this.nameRef = React.createRef();
   }
 
   handleChange = (event) => {
@@ -17,14 +18,15 @@ export class Editor extends Component {
 
   handleAdd = () => {
     this.props.callback(this.state);
-    this.setState({name: "", category: "", price: ""});
+    this.setState({name: "", category: "", price: ""},
+      () => this.nameRef.current.focus());
   }
 
   render() {
     return <React.Fragment>
       <div className="form-group p-2">
         <label>Name</label>
-        <input className="form-control" name="name" value={this.state.name} onChange={this.handleChange} autoFocus={true}/>
+        <input className="form-control" name="name" value={this.state.name} onChange={this.handleChange} autoFocus={true} ref={this.nameRef}/>
       </div>
       <div className="form-group p-2">
         <label>Category</label>
