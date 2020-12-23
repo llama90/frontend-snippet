@@ -20,7 +20,8 @@ export class Editor extends Component {
       }
     }
     this.state = {
-      errors: {}
+      errors: {},
+      wrapContent: false
     }
   }
 
@@ -48,6 +49,7 @@ export class Editor extends Component {
     this.setState(state => state.errors[name] = errors);
     return errors.length === 0;
   }
+
   validateFormElements = () => {
     let valid = true;
     Object.keys(this.formElements).forEach(name => {
@@ -58,28 +60,66 @@ export class Editor extends Component {
     return valid;
   }
 
-  render() {
-    return <React.Fragment>
-      {
-        Object.values(this.formElements).map(elem =>
-          <div className="form-group p-2" key={elem.name}>
-            <label>{elem.label}</label>
-            <input className="form-control"
-                   name={elem.name}
-                   autoFocus={elem.name === "name"}
-                   ref={this.setElement}
-                   onChange={() => this.validateFormElement(elem.name)}
-                   {...elem.validation} />
-            <ValidationDisplay
-              errors={this.state.errors[elem.name]}/>
-          </div>
-        )
-      }
-      <div className="text-center">
-        <button className="btn btn-primary" onClick={this.handleAdd}>
-          Add
-        </button>
+  toggleWrap = () => {
+    console.info("before: " + this.state.wrapContent);
+    this.setState((state) => state.wrapContent = !state.wrapContent);
+    console.info("after: " + this.state.wrapContent);
+  }
+
+  wrapContent(content) {
+    return this.state.wrapContent
+      ? <div className="bg-secondary p-2">
+        <div className="bg-light">{content}</div>
       </div>
-    </React.Fragment>
+      : content;
+  }
+
+  render() {
+    return this.wrapContent(
+      <React.Fragment>
+        <div className="form-group text-center p-2">
+          <div className="form-check">
+            <input className="form-check-input"
+                   type="checkbox"
+                   checked={this.state.wrapContent}
+                   onChange={this.toggleWrap}/>
+            <label className="form-check-label">Wrap Content</label>
+          </div>
+        </div>
+        {
+          Object.values(this.formElements).map(elem =>
+            <div className="form-group p-2" key={elem.name}>
+              <label>{elem.label}</label>
+              <input className="form-control"
+                     name={elem.name}
+                     autoFocus={elem.name === "name"}
+                     ref={this.setElement}
+                     onChange={() => this.validateFormElement(elem.name)}
+                     {...elem.validation} />
+              <ValidationDisplay
+                errors={this.state.errors[elem.name]}/>
+            </div>)
+        }
+        <div className="text-center">
+          <button className="btn btn-primary" onClick={this.handleAdd}>
+            Add
+          </button>
+        </div>
+      </React.Fragment>)
+  }
+
+  getSnapshotBeforeUpdate(props, state) {
+    return Object.values(this.formElements).map(item => {
+      return {name: [item.name], value: item.element.value}
+    })
+  }
+
+  componentDidUpdate(oldProps, oldState, snapshot) {
+    snapshot.forEach(item => {
+      let element = this.formElements[item.name].element
+      if (element.value !== item.value) {
+        element.value = item.value;
+      }
+    });
   }
 }
