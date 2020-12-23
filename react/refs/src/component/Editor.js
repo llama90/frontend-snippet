@@ -3,39 +3,40 @@ import React, {Component} from "react";
 export class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      category: "",
-      price: ""
+    this.formElements = {
+      name: {label: "Name", name: "name"},
+      category: {label: "Category", name: "category"},
+      price: {label: "Price", name: "price"}
     }
-    this.nameRef = React.createRef();
   }
 
-  handleChange = (event) => {
-    event.persist();
-    this.setState(state => state[event.target.name] = event.target.value);
+  setElement = (element) => {
+    if (element !== null) {
+      this.formElements[element.name].element = element;
+    }
   }
 
   handleAdd = () => {
-    this.props.callback(this.state);
-    this.setState({name: "", category: "", price: ""},
-      () => this.nameRef.current.focus());
+    let data = {};
+    Object.values(this.formElements)
+      .forEach(v => {
+        data[v.element.name] = v.element.value;
+        v.element.value = "";
+      });
+    this.props.callback(data);
+    this.formElements.name.element.focus();
   }
 
   render() {
     return <React.Fragment>
-      <div className="form-group p-2">
-        <label>Name</label>
-        <input className="form-control" name="name" value={this.state.name} onChange={this.handleChange} autoFocus={true} ref={this.nameRef}/>
-      </div>
-      <div className="form-group p-2">
-        <label>Category</label>
-        <input className="form-control" name="category" value={this.state.category} onChange={this.handleChange}/>
-      </div>
-      <div className="form-group p-2">
-        <label>Price</label>
-        <input className="form-control" name="price" value={this.state.price} onChange={this.handleChange}/>
-      </div>
+      {
+        Object.values(this.formElements).map(elem =>
+          <div className="form-group p-2" key={elem.name}>
+            <label>{elem.label}</label>
+            <input className="form-control" name={elem.name} autoFocus={elem.name === "name"} ref={this.setElement}/>
+          </div>
+        )
+      }
       <div className="text-center">
         <button className="btn btn-primary" onClick={this.handleAdd}>
           Add
