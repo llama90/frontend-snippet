@@ -1,6 +1,7 @@
 import {STORE, UPDATE, DELETE} from "./modelActionTypes";
 import {initialData} from "./initialData";
 
+// eslint-disable-next-line
 export default function (storeData, action) {
   switch (action.type) {
     case STORE:
@@ -22,6 +23,6 @@ export default function (storeData, action) {
           .filter(p => p.id !== action.payload)
       }
     default:
-      return storeData || initialData;
+      return storeData || initialData.modelData;
   }
 }
