@@ -2,13 +2,14 @@ import {createStore, combineReducers} from "redux";
 import modelReducer from "./modelReducer";
 import stateReducer from "./stateReducer";
 
-export default createStore(combineReducers(
-  {
-    modelData: modelReducer,
-    stateData: stateReducer
-  }));
+import {customReducerEnhancer} from "./customReducerEnhancer";
 
-export {
-  saveProduct, saveSupplier, deleteProduct, deleteSupplier
-}
-  from "./modelActionCreators";
+const enhancedReducer = customReducerEnhancer(
+  combineReducers(
+    {
+      modelData: modelReducer,
+      stateData: stateReducer
+    }));
+export default createStore(enhancedReducer);
+
+export {saveProduct, saveSupplier, deleteProduct, deleteSupplier}from "./modelActionCreators";
