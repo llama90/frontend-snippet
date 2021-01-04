@@ -19,5 +19,9 @@ export const EditorConnector = (dataType, presentationComponent) => {
     saveCallback: (data) => saveAndEndEditing(data, dataType)
   }
 
-  return connect(mapStateToProps, mapDispatchToProps)(presentationComponent);
+  const mergeProps = (dataProps, functionProps, ownProps) =>
+    ({...dataProps, ...functionProps, ...ownProps})
+
+  return connect(mapStateToProps, mapDispatchToProps,
+    mergeProps)(presentationComponent);
 }
