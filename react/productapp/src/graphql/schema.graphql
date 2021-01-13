@@ -9,10 +9,12 @@ type supplier {
   id: ID!,
   name: String!,
   city: String!,
-  products: [ID]
+  products(nameFilter: String = ""): [product]
 }
 
 type Query {
   products: [product],
-  suppliers: [supplier]
+  product(id: ID!): product,
+  suppliers: [supplier],
+  supplier(id: ID!): supplier
 }
