@@ -15,6 +15,15 @@ type supplier {
 type Query {
   products: [product],
   product(id: ID!): product,
-  suppliers: [supplier],
+  suppliers: [supplier]
   supplier(id: ID!): supplier
+}
+
+input productInput {
+  id: ID, name: String!, category: String!, price: Int!
+}
+
+type Mutation {
+  storeProduct(product: productInput): product
+  storeSupplier(id: ID, name: String!, city: String!, products: [Int]): supplier
 }
