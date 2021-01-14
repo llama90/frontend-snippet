@@ -24,6 +24,8 @@ input productInput {
 }
 
 type Mutation {
-  storeProduct(product: productInput): product
+  storeProduct(id: ID, name: String!, category: String!, price: Float!): product
   storeSupplier(id: ID, name: String!, city: String!, products: [Int]): supplier
+  deleteProduct(id: ID!): ID
+  deleteSupplier(id: ID!): ID
 }
