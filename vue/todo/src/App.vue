@@ -18,7 +18,7 @@
                 <div class="row m-1" v-for="t in filteredTasks" v-bind:key="t.id">
                     <p class="col" contenteditable="true" @focusout="modifyTask($event, t.id, t.action)"> {{t.action}}</p>
                     <div class="col-sm-1 text-center">
-                        <input type="checkbox" v-model="t.done" class="form-check-input"/>
+                        <input type="checkbox" v-model="t.done" class="form-check-input" v-on:click="modifyDone(t.id)"/>
                     </div>
                     <div class="col-sm-1 text-center">
                         <button class="btn-primary" v-on:click="deleteTask(t.id)">Delete</button>
@@ -138,6 +138,20 @@
                     this.tasks = newTasks;
                     this.storeData();
                 }
+            },
+            modifyDone(id) {
+                let newTasks = [];
+                for(let [index, task] of this.tasks.entries()) {
+                    console.log("[" + index + "]: " + task);
+                    if (task.id === id) {
+                        task.done = !task.done;
+                        newTasks.push(task);
+                    } else {
+                        newTasks.push(task);
+                    }
+                }
+                this.tasks = newTasks;
+                this.storeData();
             },
             deleteTask(id) {
                 console.log("deleted task id: " + id);
