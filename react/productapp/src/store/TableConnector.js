@@ -2,6 +2,8 @@ import {connect} from "react-redux";
 import {deleteProduct, deleteSupplier} from "./modelActionCreators";
 import {PRODUCTS, SUPPLIERS} from "./dataTypes";
 import {withRouter} from "react-router-dom";
+import {getData} from "../webservice/RestMiddleware";
+import {DataGetter} from "../component/DataGetter";
 
 export const TableConnector = (dataType, presentationComponent) => {
   const mapStateToProps = (storeData, ownProps) => {
@@ -20,14 +22,11 @@ export const TableConnector = (dataType, presentationComponent) => {
   }
 
   const mapDispatchToProps = (dispatch, ownProps) => {
-    if (dataType === PRODUCTS) {
-      return {
-        deleteCallback: (...args) => dispatch(deleteProduct(...args))
-      }
-    } else {
-      return {
-        deleteCallback: (...args) => dispatch(deleteSupplier(...args))
-      }
+    return {
+      getData: (type) => dispatch(getData(type)),
+      deleteCallback: dataType === PRODUCTS
+        ? (...args) => dispatch(deleteProduct(...args))
+        : (...args) => dispatch(deleteSupplier(...args))
     }
   }
 
@@ -36,11 +35,13 @@ export const TableConnector = (dataType, presentationComponent) => {
       editCallback: (target) => {
         ownProps.history.push(`/${dataType}/edit/${target.id}`);
       },
-      deleteCallback: functionProps.deleteCallback
+      deleteCallback: functionProps.deleteCallback,
+      getData: functionProps.getData
     }
     return Object.assign({}, dataProps, routedDispatchers, ownProps);
   }
 
   return withRouter(connect(mapStateToProps,
-    mapDispatchToProps, mergeProps)(presentationComponent));
+    mapDispatchToProps, mergeProps)(DataGetter(dataType,
+    presentationComponent)));
 }
